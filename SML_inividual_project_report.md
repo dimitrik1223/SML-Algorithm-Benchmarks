@@ -2,6 +2,7 @@
 
 The data set used for all benchmark applications included in this report is from a Taiwan banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
 
+$\sqrt{x}$
 
 # Multivariate Linear Regression 
 
