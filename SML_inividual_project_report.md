@@ -2,7 +2,7 @@
 
 
 
-  ![equation](http://www.sciweavers.org/tex2img.php?eq=1%2Bsin%28mc%5E2%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=)
+  ![equation](http://www.sciweavers.org/tex2img.php?eq=RSS%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20%28%7By%7Bi%7D%20-%20f%28x%7Bi%7D%29%7D%29%5E2&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 The data set used for all benchmark applications included in this report is from a Taiwan banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
 
