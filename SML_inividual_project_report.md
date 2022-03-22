@@ -1,8 +1,8 @@
 # Abstract 
 
-The data set used for all benchmark applications included in this report is from a Taiwan banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
+  h<sub>&theta;</sub>(x) = &theta;<sub>o</sub> x + &theta;<sub>1</sub>x
 
-$\sqrt{x}$
+The data set used for all benchmark applications included in this report is from a Taiwan banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
 
 # Multivariate Linear Regression 
 
@@ -64,13 +64,31 @@ y_preds = lr.predict(X_test)
 ```
 # Logistic Regression 
 
-`Logistic regression` is also a classical statistical learning model which offers an easily interpretable algorithm, but instead for classification tasks. The most common application of logistic regression is binary classfication where the objective is to predict the probability of a certain event occuring (target variable) given a set of features. The event of interest can be represented either by a discrete binary label or a probability ranging from 0 to 1. Often the probability value as discretized by using a probability threshold (typically 0.5) where any probability equal to or greater is consider a positive response label (typically 1). 
+`Logistic regression` is also a classical statistical learning model which offers an easily interpretable algorithm, but instead for classification tasks. The most common application of logistic regression is binary classfication where the objective is to predict the probability of a certain event occuring (target variable) given a set of features. The event of interest can be represented either by a discrete binary label or a probability ranging from 0 to 1. Often the probability value as discretized by using a probability threshold (typically 0.5) where any probability equal to or greater is considered a positive response label (typically 1). 
 
-(explain OVO and OVA logistic regression to handle multi-class classification)
+While logistic regression is optimal for binary classification, it is possible to extend the model to support multi-class classification. This can be accomplished by dividing the multi-class classification dataset into multiple binary classification datasets and then fitting logistic regression to each one. The means by which this is applied can be divided into two different strategies: 
+
+* `OvA`: In One-vs-All, we create as many binary classification problems as there are classes of interest. The problems attempt to classify whether an observation belongs to one isolated class or a grouping of all the other class values. For example, if our multi-class classification problem consisted of classifying an observation as A, B, or C, we could do the following: 
+
+* A vs (B, C)
+* B vs (A, C)
+* C vs (A, B)
+
+Whichever of the above binary classifcation problems results in the highest probability, we select as the observations class. 
+
+* `OvO`: In One-vs-One, we create a binary classifation for every pair of classes. For example, if we continue with the previous example of a multi-class classification problem between A, B, or C, then OvO would look as follows: 
+
+* A vs B
+* A vs C
+* C vs B
+
+Then a voting process occurs where the majority classification is consider the output of the OvO strategy. 
+
+
 
 ## Equation
 
-In order to make predictions ranging from 0 and 1 to model probability of the event of interest occuring, we need a function which outputs such values. The aforementioned function is called logistic regression and is the function of logisitic regression. It's formula is as follows:
+In order to make predictions ranging from 0 and 1 to model probability of the event of interest occuring, we need a function which outputs such values. The aforementioned function is called the sigmoid funciton and is the heart of logisitic regression. It's formula is as follows:
 
 
 ## Logistic Regression's Objective Function: 
@@ -212,6 +230,9 @@ https://www.geeksforgeeks.org/advantages-and-disadvantages-of-logistic-regressio
 https://www.analyticsvidhya.com/blog/2021/04/forward-feature-selection-and-its-implementation/
 
 https://towardsdatascience.com/understanding-random-forest-58381e0602d2
+
+https://machinelearningmastery.com/one-vs-rest-and-one-vs-one-for-multi-class-classification/
+
 
 
 
