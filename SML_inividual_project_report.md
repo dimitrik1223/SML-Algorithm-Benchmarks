@@ -4,6 +4,13 @@
 
 The data set used for all benchmark applications included in this report is from a Taiwan banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
 
+<!DOCTYPE html>
+<title>MathJax demo</title>
+<script src=
+"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+$$\sum_{k=1}^Nk(N-k+1)$$
+
 # Multivariate Linear Regression 
 
 `Linear Regression` is a statistical learning algorithm used within a supervised setting which can be used for predicting a continuous numerical value. Linear regression can be split into two different types: `univariate` or simple regression and `multivariate` regression. What differentiates these two variations of the algorithm are whether it's fit to multiple independent variables for prediction. `Univariate` models use only one independent variable as a predictor, while `multivariate` models use multiple to estimate a prediction. This algorithm predates its modern machine learning application significantly, as it is considered one of statsitics most fundamental mechanisms. 
@@ -89,7 +96,6 @@ Then a voting process occurs where the majority classification is consider the o
 
 In order to make predictions ranging from 0 and 1 to model probability of the event of interest occuring, we need a function which outputs such values. The aforementioned function is called the sigmoid funciton and is the heart of logisitic regression. It's formula is as follows:
 
-<br /> y = &beta;<sub>0</sub> + &beta;<sub>x1</sub>... &beta;<sub>p</sub> 
 
 S(x) = 1&frasl;(1 + <span>&#8455;</span><sup>-x</sup>) 
 
