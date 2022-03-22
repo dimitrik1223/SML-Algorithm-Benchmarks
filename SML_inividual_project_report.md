@@ -1,9 +1,5 @@
 # Abstract 
 
-
-
-  ![equation](http://www.sciweavers.org/tex2img.php?eq=RSS%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20%28%7By%7Bi%7D%20-%20f%28x%7Bi%7D%29%7D%29%5E2&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
-
 The data set used for all benchmark applications included in this report is from a Taiwan banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
 
 # Multivariate Linear Regression 
@@ -28,7 +24,9 @@ The equation of mutliple linear regression is certainly one most people have enc
 
 In order to fit a line that best matches the pattern of the data, linear regression, just as all other learning algorithms do, depends on an objective or cost function which acts as a feedback loop to the algorithm indicating how good of a job it is doing and by how much. By doing this, the algorithm can iteratively adjust its coefficients to minimize the output of the objective function and subsequently improve its fit. One common objective function used is `RSS` or residual sum of squares. Which penalizes predictions with large residuals by squaring their value. A residual is the difference between a prediction value outputted by the model and an actual value which we figuratively keep out of the model's site until it's time to evaluate its performance. The RSS is than just a sum of the residuals for all predictions. The equation looks as follows: 
 
+ ![equation](http://www.sciweavers.org/tex2img.php?eq=RSS%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20%28%7By%7Bi%7D%20-%20f%28x%7Bi%7D%29%7D%29%5E2&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
+Here *yi* represents an actual label value and *f(xi)* a predicted or estimated value. When we subtract predicted from actual we get the residual. We then square the residual and perform summation across all predicted values to find the RSS. 
 
 ## Pros and Cons of Linear Regression
 
@@ -85,39 +83,60 @@ Whichever of the above binary classifcation problems results in the highest prob
 
 Then a voting process occurs where the majority classification is consider the output of the OvO strategy. 
 
-
-
 ## Equation
 
 In order to make predictions ranging from 0 and 1 to model probability of the event of interest occuring, we need a function which outputs such values. The aforementioned function is called the sigmoid funciton and is the heart of logisitic regression. It's formula is as follows:
 
+![equation](http://www.sciweavers.org/tex2img.php?eq=S%28x%29%20%3D%20%20%5Cfrac%7B%5Cmathrm%7B1%7D%20%7D%7B%5Cmathrm%7B1%7D%20%2B%20e%5E-%5Ex%20%7D&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
-S(x) = 1&frasl;(1 + <span>&#8455;</span><sup>-x</sup>) 
+Using this function we can plug in the linear combination of coefficients and corresponding feature vectors into *x*, hence the *regression* in logistic regression. 
 
 ## Logistic Regression's Objective Function: 
 
-include explanation about what is linear about logistic regression as well
+The beta coefficients must be estimated so that logistic regression's output predicts probabilities of the likelihood of an observation to fall in the positive response class which are as close as possible to the observed labels (0 or 1). In the case of this data set, the event of interest is credit card default in the following month (`default.payment.next.month`). The mathematical function which can be maximized to determine these optimal coefficient values is called the `likelihood function` formulated as follows: 
 
-The beta coefficients must be estimated so that logistic regression's output predicts probabilities of the likelihood of an observation to fall in the positive response class which are as close as possible to the observed labels (0 or 1). In the case of this data set, the event of interest is credit card default in the following month (`default.payment.next.month`). The mathematical function which can be maximized to determine these optimal coefficient values is called `maximum likelihood` formulated as follows: 
+![equation](http://www.sciweavers.org/tex2img.php?eq=%0A%20%5Cell%20%28%20%5Cbeta_%7B0%7D%2C%5Cbeta_%7B1%7D%29%20%3D%20%20%5CPi_%7Bi%3Ay_%7Bi%7D%20%3D%201%7D%20%20%5Crho%20%28x_%7Bi%7D%29%20%20%5CPi_%7Bi%27%3Ay_%7Bi%27%7D%20%3D%200%7D%20%281%20-%20%20%5Crho%28%7Bx_%7Bi%27%7D%29%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
-
-
-
+We optimize the likelihood function above by finding the coefficients that maximize the function. These will be the estimated beta coefficients we plug into the *x* within the sigmoid function. 
 
 ## Pros and Cons of Logistic Regression:
 
 
 ### The Pros: 
 * Similar to linear regerssion, logistic regression is a relatively easy model to implement and interpret.
-* It can be extended to handle multiple-class classification using multinomial regression or other variants of logistic regression. 
-* 
+* It can be extended to handle multiple-class classification using OvO and OvA strategies. 
+* Performs well on simple datasets that are clearly seperated. 
+* Makes no assumptions about the underlying distributions of the classes.
 
 ### The Cons: 
-* 
+* Much like its linear counterpart linear regression, logistic regression assumes linearity between the dependent and independent variables which can lead to added bias for non-linear relationships. 
+* While it can use extensions to handle multi-class classification, many related extension techniques are not efficient. 
+* Logistic regression is somewhat sensitive to multicollinearity. 
 
 ## Applying Logistic Regression in Python
 
+To apply logistic regression in Python, I used `sklearn`'s `LogisticRegression` class. In terms of preprocessing, I first established the feature matrix `X` and target variable vector `y`. I'll use `default.payment.next.month` as the target for all subsequent benchmarks including this one. Nextly, I use a forward stepwise feature selection function from the `mlxtend` moduel. Forward stepwise feature selection intails starting with a null model and then sequentially adding features one-at-a-time which lead to a better model. I load the `LogisticRegression()` configure the forward stepwise feature selection class as follows:
 
+```Python
+#initiate sklearn's logistic regression
+log_reg_mod = LogisticRegression() #class_weight = 'balanced'
+for_step_select = sfs(log_reg_mod, k_features=8, forward=True, verbose=2, scoring='accuracy')
+```
+`k_features = 8` indicates I want FSFS to select only a subset of eight features to keep for the model.
+
+ The selected features include: `['EDUCATION', 'MARRIAGE', 'PAY_0', 'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6']`. 
+
+ Finally, I perform a `train/test` split, train the model, make predictions, and evaluate model performance as follows. Ultimately, the model provides a mediocre AUC of `0.6042`. The code to accomplish all of this is as follows:
+
+ ```Python
+ log_reg_mod.fit(X_train,y_train)
+
+y_preds = log_reg_mod.predict(X_test)
+
+fpr, tpr, thresholds = metrics.roc_curve(y_test, y_preds, pos_label=1)
+
+metrics.auc(fpr, tpr)
+ ``` 
 
 # Decision Tree Classifier:
 
