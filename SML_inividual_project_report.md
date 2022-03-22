@@ -95,7 +95,7 @@ Using this function we can plug in the linear combination of coefficients and co
 
 The beta coefficients must be estimated so that logistic regression's output predicts probabilities of the likelihood of an observation to fall in the positive response class which are as close as possible to the observed labels (0 or 1). In the case of this data set, the event of interest is credit card default in the following month (`default.payment.next.month`). The mathematical function which can be maximized to determine these optimal coefficient values is called the `likelihood function` formulated as follows: 
 
-![equation]([img]http://www.sciweavers.org/tex2img.php?eq=%0A%20%5Cell%20%28%20%5Cbeta_%7B0%7D%2C%5Cbeta_%7B1%7D%29%20%3D%20%20%5CPi_%7Bi%3Ay_%7Bi%7D%20%3D%201%7D%20%20%5Crho%20%28x_%7Bi%7D%29%20%20%5CPi_%7Bi%27%3Ay_%7Bi%27%7D%20%3D%200%7D%20%281%20-%20%20%5Crho%28%7Bx_%7Bi%27%7D%29%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![equation](http://www.sciweavers.org/tex2img.php?eq=%5Cell%20%28%20%5Cbeta_%7B0%7D%2C%5Cbeta_%7B1%7D%29%20%3D%20%20%5CPi_%7Bi%3Ay_%7Bi%7D%20%3D%201%7D%20%20%5Crho%20%28x_%7Bi%7D%29%20%20%5CPi_%7Bi%27%3Ay_%7Bi%27%7D%20%3D%200%7D%20%281%20-%20%20%5Crho%28%7Bx_%7Bi%27%7D%29%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 We optimize the likelihood function above by finding the coefficients that maximize the function. These will be the estimated beta coefficients we plug into the *x* within the sigmoid function. 
 
