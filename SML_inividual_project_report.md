@@ -17,7 +17,9 @@ In a nutshell, linear regression fits a line or hyperplane to the data. This reg
 
 The equation of simple regression is certainly one most people have encountered in their grade school math curiculum, as it is simply the equation for slope, or change of a dependent variable as a ratio of change in an independent variable. The equation is as follows: 
 
-<br /> $${y = \beta_0 + \beta_1x}$$
+<br /> y = &beta;<sub>(0)</sub> + &beta;<sub>x1</sub>... &beta;<sub>p</sub> 
+
+
 
 *y* represents the response variable, *x* the independent variable, and beta zero and beta one indicate the intercept coefficient and the coefficient for the single feature respectively. 
 
