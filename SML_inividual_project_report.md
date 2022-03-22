@@ -4,12 +4,7 @@
 
 The data set used for all benchmark applications included in this report is from a Taiwan banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
 
-<!DOCTYPE html>
-<title>MathJax demo</title>
-<script src=
-"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-$$\sum_{k=1}^Nk(N-k+1)$$
+$\frac{y_2}slope$
 
 # Multivariate Linear Regression 
 
