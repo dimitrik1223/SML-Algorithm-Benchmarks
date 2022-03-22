@@ -15,15 +15,12 @@ In a nutshell, linear regression fits a line or hyperplane to the data. This reg
 
 ## Equation
 
-The equation of simple regression is certainly one most people have encountered in their grade school math curiculum, as it is simply the equation for slope, or change of a dependent variable as a ratio of change in an independent variable. The equation is as follows: 
+The equation of mutliple linear regression is certainly one most people have encountered in their grade school math curiculum, as it is simply the equation for slope, or change of a dependent variable as a ratio of change in an independent variables. The equation is as follows: 
 
-<br /> y = &beta;<sub>(0)</sub> + &beta;<sub>x1</sub>... &beta;<sub>p</sub> 
-
+<br /> y = &beta;<sub>0</sub> + &beta;<sub>x1</sub>... &beta;<sub>p</sub> 
 
 
 *y* represents the response variable, *x* the independent variable, and beta zero and beta one indicate the intercept coefficient and the coefficient for the single feature respectively. 
-
-The equation for multivariate linear regression is just an extension to this equation with a beta coefficient for every feature included.
 
 ## Linear Regression's Objective Function
 
@@ -92,6 +89,9 @@ Then a voting process occurs where the majority classification is consider the o
 
 In order to make predictions ranging from 0 and 1 to model probability of the event of interest occuring, we need a function which outputs such values. The aforementioned function is called the sigmoid funciton and is the heart of logisitic regression. It's formula is as follows:
 
+<br /> y = &beta;<sub>0</sub> + &beta;<sub>x1</sub>... &beta;<sub>p</sub> 
+
+S(x) = <sup>1</sup>&frasl;<sup>1 + <span>&#8455;</span><sup>-x</sup> </sup> 
 
 ## Logistic Regression's Objective Function: 
 
