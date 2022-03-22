@@ -91,7 +91,7 @@ In order to make predictions ranging from 0 and 1 to model probability of the ev
 
 <br /> y = &beta;<sub>0</sub> + &beta;<sub>x1</sub>... &beta;<sub>p</sub> 
 
-S(x) = 1&frasl;1 + <span>&#8455;</span><sup>-x</sup> 
+S(x) = 1&frasl;(1 + <span>&#8455;</span><sup>-x</sup>) 
 
 ## Logistic Regression's Objective Function: 
 
