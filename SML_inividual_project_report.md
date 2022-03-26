@@ -188,8 +188,42 @@ for_step_select_clf = for_step_select_clf.fit(X, y)
 ```
 Notice the different choice in the `k_features` argument as opposed to fitting the logistic regression model to the `sfs` function. Considering decision trees can handle a large number of features, this was accounted for by increasing the number of best features FSFS should return. 
 
-After feature selection, the data must be split once again into train and test sets. While the previous models do not have any critical hyperparameters to tune, tree-based models do. 
+After feature selection, the data must be split once again into train and test sets. While the previous models do not have any critical hyperparameters to tune, tree-based models do. Using `Sklearn`'s
+`GridSearchCV` this can be accomplished like so: 
 
+```Python
+#create params dictionary
+param_dict = {
+    'criterion':['gini','entropy'],
+    "max_depth": range(1,5),
+    "min_samples_split": range(1,5),
+    "min_samples_leaf": range(1,5)
+}
+
+grid = GridSearchCV(clf,
+                   param_grid=param_dict,
+                   cv=5,
+                   verbose=1,
+                   n_jobs=-1)
+grid.fit(X_train,y_train)
+```
+
+Firstly we create a parameter dictionary mapping every hyperparameter we intend on tuning with values for grid search to search over. Grid search then iteratively tries all possible combinations of hyperparameter values, while keeping track on how they impact model performance on the trainset. Here we have `128` candidate value combinations and given that we specifify that we want `cv = 5`, meaning five-fold cross validation this results in `64O fits`. The hyperparameters used to tune the decision tree classifier:
+
+* `Criterion`: The function used to measure how good a split is. 
+
+* `Max_depth`: The maximum number of branch levels a tree can have.
+
+* `Min_samples_split`: The minimum number of samples necessary to create a branch.
+
+* `Min_samples_leaf`: The minimum number of samples to qualify as a terminal or leaf node.
+
+The best parameters returned by GridSearchCV are: 
+
+```Python
+{'criterion': 'gini', 'max_depth': 1, 'min_samples_leaf': 1, 'min_samples_split': 2}
+```
+Nextly, I fit the model using these parameters and evaluate the model using `AUC`. With tuned parameters the decision tree classifier performs pretty well with an AUC of `0.64`.
 
 # Random Forest Classifier
 
