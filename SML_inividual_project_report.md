@@ -1,6 +1,6 @@
 # Abstract 
 
-The data set used for all benchmark applications included in this report is from a Taiwan banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
+The data set used for all benchmark applications included in this report is from a Taiwanese banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
 
 # Multivariate Linear Regression 
 
@@ -46,9 +46,9 @@ Here are some points for what has made this algorithm stay in the mix for so lon
 
 ## Applying Linear Regression in Python
 
-In order to create a benchmark demonstration of applying linear regression using Python, I worked with both the `scikit learn` and `statsmodels` modules. While typically this data set is used for classification, in this application I will predict the value of `LIMIT_BAL` which represents the amount of total credit provided to a client at the household level, using a selection of the other features. I selected my variables based on two important criteria: the `Pvalue` of a feature, as well as whether or not a feature had a high level of correlation with other features (`multicollinearity`). 
+In order to create a benchmark demonstration of applying linear regression using Python, I worked with both the `scikit learn` and `statsmodels` modules. While typically this data set is used for classification, in this application I will predict the value of `LIMIT_BAL`, which represents the amount of total credit provided to a client at the household level, using a selection of the other features. I selected my variables based on two important criteria: the `Pvalue` of a feature, as well as whether or not a feature had a high level of correlation with other features (`multicollinearity`). 
 
-Nextly I fit the data to the statsmodels `OLS` class in order to view a summary output of the coefficients and their Pvalue's. OLS stands for ordinary least squares is an implimentation of linear regression which uses RSS to optimize the fit of the regression line. The summary indicated the following: 
+Nextly I fit the data to the statsmodels `OLS` class in order to view a summary output of the coefficients and their Pvalue's. OLS which stands for ordinary least squares, is an implimentation of linear regression which uses RSS to optimize the fit of the regression line. The summary indicated the following: 
 
 Thanks to the detailed `summary()` method from statsmodels OLS class we have validated the statistical significance of the included features and can be confident that these features are related to the response variable. Fitting and predicting using scikit learn's linear regression class on a train/test split of the model results in an RSS of `67958479153053.086`, see the code for this finale prediction below: 
 
@@ -63,7 +63,7 @@ y_preds = lr.predict(X_test)
 ```
 # Logistic Regression 
 
-`Logistic regression` is also a classical statistical learning model which offers an easily interpretable algorithm, but instead for classification tasks. The most common application of logistic regression is binary classfication where the objective is to predict the probability of a certain event occuring (target variable) given a set of features. The event of interest can be represented either by a discrete binary label or a probability ranging from 0 to 1. Often the probability value as discretized by using a probability threshold (typically 0.5) where any probability equal to or greater is considered a positive response label (typically 1). 
+`Logistic regression` is also a classical statistical learning model which offers an easily interpretable algorithm, but instead for classification tasks. The most common application of logistic regression is binary classfication where the objective is to predict the probability of a certain event occuring (target variable) given a set of features. The event of interest can be represented either by a discrete binary label or a probability ranging from 0 to 1. Often the probability value is discretized by using a probability threshold (typically 0.5) where any probability equal to or greater than the threshold is considered a positive response label (typically 1). 
 
 While logistic regression is optimal for binary classification, it is possible to extend the model to support multi-class classification. This can be accomplished by dividing the multi-class classification dataset into multiple binary classification datasets and then fitting logistic regression to each one. The means by which this is applied can be divided into two different strategies: 
 
@@ -104,7 +104,7 @@ We optimize the likelihood function above by finding the coefficients that maxim
 
 ### The Pros: 
 * Similar to linear regerssion, logistic regression is a relatively easy model to implement and interpret.
-* It can be extended to handle multiple-class classification using OvO and OvA strategies. 
+* It can be extended to handle multi-class classification using OvO and OvA strategies. 
 * Performs well on simple datasets that are clearly seperated. 
 * Makes no assumptions about the underlying distributions of the classes.
 
@@ -115,7 +115,7 @@ We optimize the likelihood function above by finding the coefficients that maxim
 
 ## Applying Logistic Regression in Python
 
-To apply logistic regression in Python, I used `sklearn`'s `LogisticRegression` class. In terms of preprocessing, I first established the feature matrix `X` and target variable vector `y`. I'll use `default.payment.next.month` as the target for all subsequent benchmarks including this one. Nextly, I use a forward stepwise feature selection function from the `mlxtend` moduel. Forward stepwise feature selection intails starting with a null model and then sequentially adding features one-at-a-time which lead to a better model. I load the `LogisticRegression()` configure the forward stepwise feature selection class as follows:
+To apply logistic regression in Python, I used `sklearn`'s `LogisticRegression` class. In terms of preprocessing, I first established the feature matrix `X` and target variable vector `y`. I'll use `default.payment.next.month` as the target for all subsequent benchmarks including this one. Nextly, I use a forward stepwise feature selection function from the `mlxtend` module. Forward stepwise feature selection entails starting with a null model (no predictors) and then sequentially adding features one-at-a-time which lead to a better model. I load the `LogisticRegression()` and configure the forward stepwise feature selection class as follows:
 
 ```Python
 #initiate sklearn's logistic regression
@@ -176,6 +176,20 @@ Log loss is the inverse logit function and can be used to optimize logistic regr
 
 
 ## Applying Decision Tree Classifiers in Python
+
+I used `Sklearn`'s `DecisionTreeClassifier` class to apply this model in Python. Forward stepwise feature selection was implemented again for feature selection. 
+
+```Python
+clf = DecisionTreeClassifier(random_state=0)
+
+for_step_select_clf = sfs(clf, k_features=12, forward=True, verbose=2, scoring='accuracy')
+#fit the forward stepwise selection class to the data
+for_step_select_clf = for_step_select_clf.fit(X, y)
+```
+Notice the different choice in the `k_features` argument as opposed to fitting the logistic regression model to the `sfs` function. Considering decision trees can handle a large number of features, this was accounted for by increasing the number of best features FSFS should return. 
+
+After feature selection, the data must be split once again into train and test sets. While the previous models do not have any critical hyperparameters to tune, tree-based models do. 
+
 
 # Random Forest Classifier
 
