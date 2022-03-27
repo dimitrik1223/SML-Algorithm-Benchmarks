@@ -15,10 +15,10 @@ In a nutshell, linear regression fits a line or hyperplane to the data. This reg
 
 The equation of mutliple linear regression is certainly one most people have encountered in their grade school math curiculum, as it is simply the equation for slope, or change of a dependent variable as a ratio of change in an independent variables. The equation is as follows: 
 
-<br /> y = &beta;<sub>0</sub> + &beta;<sub>x1</sub>... &beta;<sub>p</sub> 
+![equation](http://www.sciweavers.org/tex2img.php?eq=y%20%3D%20%20%5Cbeta_%7B0%7D%20%2B%20%5Cbeta_%7B1%7Dx_%7B1%7D%20%2B%20%20%5Cbeta_%7B2%7Dx_%7B2%7D%20...%20%2B%20%20%5Cbeta_%7Bp%7Dx_%7Bp%7D&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 
-*y* represents the response variable, *x* the independent variable, and beta zero and beta one indicate the intercept coefficient and the coefficient for the single feature respectively. 
+*y* represents the response variable, *x* the independent variable, and beta zero through beta p indicate the intercept coefficient and the coefficients for the features.
 
 ## Linear Regression's Objective Function
 
@@ -253,17 +253,50 @@ The objective function for a random forest classifier is the same as that for a 
 
 ## Applying Random Forest Classifiers in Python
 
+To benchmark a random forest classifier I import the `RandomForestClassifier` class once again from `sklearn`. 
+I use FSFS again to select the best features, this time setting `k_features = 15`. Considering the algorithm will randomly subsample the data within the many decision trees used in the forest. Therefore, it makes sense to give the model more features to sample from. FSFS determines the following features the best predictors for the model:
+`['cust_id', 'LIMIT_BAL', 'SEX', 'EDUCATION', 'MARRIAGE', 'AGE', 'PAY_0', 'PAY_2', 'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6', 'BILL_AMT2', 'PAY_AMT5', 'PAY_AMT6']`.
 
+I apply hyperparameter tuning once again as random forest has many important hyperparameters to tune. Tuning a random forest can make a very significant difference in model performance. The code for this grid search is as follows:
+
+```Python
+#create params dictionary
+param_dict = {'bootstrap': [True, False],
+ 'max_depth': [10, 20, 30, 40, 50, None],
+ 'max_features': ['auto', 'sqrt'],
+ 'min_samples_leaf': [1, 2, 4],
+ 'min_samples_split': [2, 5, 10],
+ 'n_estimators': [200, 400, 600, 800]}
+
+
+grid = GridSearchCV(rf_clf,
+                   param_grid=param_dict,
+                   cv=5,
+                   verbose=1,
+                   n_jobs=-1)
+
+grid.fit(X_train,y_train)
+```
+
+The new parameters featured here that are important are as follows:
+
+* `bootstrap`: Whether or not to use bootstrapped sampling when building the tress.
+
+* `max_features`: The number of features to consider using when searching for the best split.
+
+* `n_estimators`: The number of trees in the random forest. 
+
+finish 
 
 # Support Vector Machines:
 
-In simplest terms an `SVM` is a statistical learning model which fits a hyperplane within feature space to classify data points discretely. While other versions of the SVM model exist for regression uses cases, such as the support vector regressor, I'll focus solely on the classical usage of the SVM model. To explain the core mechanism behind SVM, I'll focus on a simple example. Imagine you have a dataset that consists of two discrete classes. One class could be circles and the other could be squares. Now, imagine these these datapoints are scattered across feature space and you want to fit a line or hyperplane to create a linear seperation boundary of the circles and squares. That way you can simply classify all the points that fall above the line as circles and all that fall below as squares. The issue here arises from the novel topic of infinite possiblities in space. There's no easy way to determine which is the optimal position for this line to be in, because you could slightly change its position infinitely and basically accomplish the same thing. There needs to be a more concrete set of rules for this algorithm to be commputationally efficient and just generally effective at its task. 
+In simplest terms an `SVM` is a statistical learning model which fits a hyperplane within feature space to classify data points discretely. While other versions of the SVM model exist for regression uses cases, such as the support vector regressor, I'll focus solely on the classical usage of the SVM model. To explain the core mechanism behind SVM, I'll focus on a simple example. Imagine you have a dataset that consists of two discrete classes. One class could be circles and the other could be squares. Now, imagine these these datapoints are scattered across feature space and you want to fit a line or hyperplane to create a linear seperation boundary of the circles and squares. That way you can simply classify all the points that fall above the line as circles and all that fall below as squares. The issue here arises from infinite possiblities in space. There's no easy way to determine which is the optimal position for this line to be in, because you could slightly change its position infinitely. There needs to be a more concrete set of rules for this algorithm to be commputationally efficient and just generally effective at its task. 
 
 The answer to this dilemma is the margin. The margin is essentially the maximum space between the hyperplane and its closest data point(s) in both directions. The datapoints which have the minimum distance from the hyperplane therefore define the margins border and are therefore termed `support vectors`. The reason we want to maximize this margin is because the larger it is, the more confident we can be in the accuracy of our classifications based on which side of the hyperplane data points are on.
 
 The next limitation that arises from this point is what happens when the data is not linearly seperable, meaning there's no clearly defined hyperplane to seperate classes without there being missclassifications. One way of making the algorithm less strict when it comes to linear seperation boundaries is adding a slack variable to the objective function (described below) to correct the objective function so that it satisfies its constraints. This concept is called a hard/soft margin. A hard margin as its name implies is strict and allows for no slack variables, while a soft margin allows for the use of slack variables to make the decision boundary less strict but imposes bias by making the fit less accurate to the actual data. The use of slack variable is controlled by a `C` variable which reperesents the budget for adding slack variables. If C is very low, larger slack variables will be used while when the opposite is true, slack variables will be more highly penalized and will then shrink. This penalty term concept is similar to the ideas behind `L2` regularization. 
 
-Another interesting way to solve more extreme situations, where data is totally not linearly seperable is `SVM kernels`. A kernel in this context is an interesting mathematical hack used to make two dimensional data, that's not linearly seperable in two dimensions linearly seperable in higher dimensional space by engineering a new variable to add that more dimentions to the data, then finding the linear seperation hyperplane in three dimensional space and finally projecting it back down to 2D space.
+Another interesting way to solve more extreme situations, where data is totally not linearly seperable is `SVM kernels`. A kernel in this context is an interesting mathematical hack used to make two dimensional data, that's not linearly seperable in two dimensions linearly seperable in higher dimensional space by engineering a new variables to add new dimentions to the data, then finding the linear seperation hyperplane in three dimensional space and finally projecting it back down to 2D space.
 
 I won't delve too deep into the mathematics here, but I will enumerate and summarize the two most important kernels that can be applied to SVM from a conceptual standpoint.
 
@@ -271,9 +304,12 @@ I won't delve too deep into the mathematics here, but I will enumerate and summa
 
 * `Polynomial kernel`: This kernel can be used when the data is not linearly seperable and adds a polynmial term much like the polynomial term in regression. The trick here is still that the kernel allows for the inner product of vectors to be used as opposed to the actual individual data points. However it does add many added dimensions to the data which can result in very long run times. Additionally, the polynomial regression introduces two new hyperparameters: `Degree`, which indicates the degree of the kernel's polynomial term, (higher degree, more flexbility) and `Gamma` 
  
-
+SVM can also be extended to multi-class classification problems using `OvO` and `OvA`. This extention beyond the binary-class setting is methodologically identical to OvO and OvA with logistic regression. 
 
 ## SVM's Objective Function:
+
+
+
 
 
 ## Pros and Cons of the SVM:
