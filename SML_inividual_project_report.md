@@ -309,9 +309,7 @@ SVM can also be extended to multi-class classification problems using `OvO` and 
 
 ## SVM's Objective Function:
 
-
-
-
+![image](/svm.png)
 
 ## Pros and Cons of the SVM:
 
