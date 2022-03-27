@@ -15,7 +15,7 @@ In a nutshell, linear regression fits a line or hyperplane to the data. This reg
 
 The equation of mutliple linear regression is certainly one most people have encountered in their grade school math curiculum, as it is simply the equation for slope, or change of a dependent variable as a ratio of change in an independent variables. The equation is as follows: 
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=y%20%3D%20%20%5Cbeta_%7B0%7D%20%2B%20%5Cbeta_%7B1%7Dx_%7B1%7D%20%2B%20%20%5Cbeta_%7B2%7Dx_%7B2%7D%20...%20%2B%20%20%5Cbeta_%7Bp%7Dx_%7Bp%7D&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![equation](http://www.sciweavers.org/tex2img.php?eq=y%20%3D%20%20%5Cbeta_%7B0%7D%20%2B%20%5Cbeta_%7B1%7Dx_%7B1%7D%20%2B%20%5Cbeta_%7B2%7Dx_%7B2%7D%20...%20%2B%20%5Cbeta_%7Bp%7Dx_%7Bp%7D&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 
 *y* represents the response variable, *x* the independent variable, and beta zero through beta p indicate the intercept coefficient and the coefficients for the features.
