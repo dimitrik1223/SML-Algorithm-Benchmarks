@@ -24,7 +24,8 @@ The equation of mutliple linear regression is certainly one most people have enc
 
 In order to fit a line that best matches the pattern of the data, linear regression, just as all other learning algorithms do, depends on an objective or cost function which acts as a feedback loop to the algorithm indicating how good of a job it is doing and by how much. By doing this, the algorithm can iteratively adjust its coefficients to minimize the output of the objective function and subsequently improve its fit. One common objective function used is `RSS` or residual sum of squares. Which penalizes predictions with large residuals by squaring their value. A residual is the difference between a prediction value outputted by the model and an actual value which we figuratively keep out of the model's site until it's time to evaluate its performance. The RSS is than just a sum of the residuals for all predictions. The equation looks as follows: 
 
- ![equation](http://www.sciweavers.org/tex2img.php?eq=RSS%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20%28%7By%7Bi%7D%20-%20f%28x%7Bi%7D%29%7D%29%5E2&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+ ![equation](http://www.sciweavers.org/tex2img.php?eq=RSS%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%28y_%7Bi%7D%20-%20f%28x_%7Bi%7D%29%29%5E2&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+
 
 Here *yi* represents an actual label value and *f(xi)* a predicted or estimated value. When we subtract predicted from actual we get the residual. We then square the residual and perform summation across all predicted values to find the RSS. 
 
