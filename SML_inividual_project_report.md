@@ -1,7 +1,9 @@
-% SML Individual Project: Algorithm Benchmarking
-*by Dimitri Kestenbaum*
+SML Individual Project
+==============
 
-3/29/2022 
+***Algorithm Benchmarks***
+
+**Author:** *Dimitri Kestenbaum*
 
 # Abstract 
 
@@ -92,7 +94,7 @@ Then a voting process occurs where the majority classification is consider the o
 
 In order to make predictions ranging from 0 and 1 to model probability of the event of interest occuring, we need a function which outputs such values. The aforementioned function is called the sigmoid funciton and is the heart of logisitic regression. It's formula is as follows:
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=S%28x%29%20%3D%20%20%5Cfrac%7B%5Cmathrm%7B1%7D%20%7D%7B%5Cmathrm%7B1%7D%20%2B%20e%5E-%5Ex%20%7D&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![image](/Sigmoid.png)
 
 
 
@@ -102,7 +104,7 @@ Using this function we can plug in the linear combination of coefficients and co
 
 The beta coefficients must be estimated so that logistic regression's output predicts probabilities of the likelihood of an observation to fall in the positive response class which are as close as possible to the observed labels (0 or 1). In the case of this data set, the event of interest is credit card default in the following month (`default.payment.next.month`). The mathematical function which can be maximized to determine these optimal coefficient values is called the `likelihood function` formulated as follows: 
 
-![image](/Sigmoid.png)
+![image](/loglikelihood.png)
 
 We optimize the likelihood function above by finding the coefficients that maximize the function. These will be the estimated beta coefficients we plug into the *x* within the sigmoid function. 
 
@@ -360,6 +362,24 @@ I'll once again map the parameters used in the grid search with their correspond
 * `degree`: Defines the degree of the polynomial kernel, ignored otherwise.
 
 * `gamma`: The value of gamma is used to control the flexibility of the effects created by the rbf, poly, and sigmoid kernels. 
+
+
+# Conclusion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Sources
 
