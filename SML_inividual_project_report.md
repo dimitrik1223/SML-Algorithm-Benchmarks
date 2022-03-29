@@ -1,6 +1,11 @@
+% SML Individual Project: Algorithm Benchmarking
+*by Dimitri Kestenbaum*
+
+3/29/2022 
+
 # Abstract 
 
-The data set used for all benchmark applications included in this report is from a Taiwanese banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
+Within this document I will summarize conceptually five different machine learning models: `linear regression`,`logistic regression`,`decision tree classifier`,`random forest classifier`, and `SVM`. I will benchmark the application of each model in Python. I will use the `Sklearn` machine learning library for the majority of the application sections. The data set used for all benchmark applications included in this report is from a Taiwanese banking institution who'd like to predict a client's likelihood of defauling on their credit card. 
 
 # Multivariate Linear Regression 
 
@@ -24,8 +29,7 @@ The equation of mutliple linear regression is certainly one most people have enc
 
 In order to fit a line that best matches the pattern of the data, linear regression, just as all other learning algorithms do, depends on an objective or cost function which acts as a feedback loop to the algorithm indicating how good of a job it is doing and by how much. By doing this, the algorithm can iteratively adjust its coefficients to minimize the output of the objective function and subsequently improve its fit. One common objective function used is `RSS` or residual sum of squares. Which penalizes predictions with large residuals by squaring their value. A residual is the difference between a prediction value outputted by the model and an actual value which we figuratively keep out of the model's site until it's time to evaluate its performance. The RSS is than just a sum of the residuals for all predictions. The equation looks as follows: 
 
- ![equation](http://www.sciweavers.org/tex2img.php?eq=RSS%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%28y_%7Bi%7D%20-%20f%28x_%7Bi%7D%29%29%5E2&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
-
+![image](/RSS.png)
 
 Here *yi* represents an actual label value and *f(xi)* a predicted or estimated value. When we subtract predicted from actual we get the residual. We then square the residual and perform summation across all predicted values to find the RSS. 
 
@@ -90,13 +94,15 @@ In order to make predictions ranging from 0 and 1 to model probability of the ev
 
 ![equation](http://www.sciweavers.org/tex2img.php?eq=S%28x%29%20%3D%20%20%5Cfrac%7B%5Cmathrm%7B1%7D%20%7D%7B%5Cmathrm%7B1%7D%20%2B%20e%5E-%5Ex%20%7D&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
+
+
 Using this function we can plug in the linear combination of coefficients and corresponding feature vectors into *x*, hence the *regression* in logistic regression. 
 
 ## Logistic Regression's Objective Function: 
 
 The beta coefficients must be estimated so that logistic regression's output predicts probabilities of the likelihood of an observation to fall in the positive response class which are as close as possible to the observed labels (0 or 1). In the case of this data set, the event of interest is credit card default in the following month (`default.payment.next.month`). The mathematical function which can be maximized to determine these optimal coefficient values is called the `likelihood function` formulated as follows: 
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=%5Cell%20%28%20%5Cbeta_%7B0%7D%2C%5Cbeta_%7B1%7D%29%20%3D%20%20%5CPi_%7Bi%3Ay_%7Bi%7D%20%3D%201%7D%20%20%5Crho%20%28x_%7Bi%7D%29%20%20%5CPi_%7Bi%27%3Ay_%7Bi%27%7D%20%3D%200%7D%20%281%20-%20%20%5Crho%28%7Bx_%7Bi%27%7D%29%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![image](/Sigmoid.png)
 
 We optimize the likelihood function above by finding the coefficients that maximize the function. These will be the estimated beta coefficients we plug into the *x* within the sigmoid function. 
 
@@ -183,7 +189,7 @@ I used `Sklearn`'s `DecisionTreeClassifier` class to apply this model in Python.
 ```Python
 clf = DecisionTreeClassifier(random_state=0)
 
-for_step_select_clf = sfs(clf, k_features=12, forward=True, verbose=2, scoring='accuracy')
+for_step_select_clf = sfs(clf, k_features=20, forward=True, verbose=2, scoring='accuracy')
 #fit the forward stepwise selection class to the data
 for_step_select_clf = for_step_select_clf.fit(X, y)
 ```
@@ -303,7 +309,9 @@ I won't delve too deep into the mathematics here, but I will enumerate and summa
 
 * `Linear kernel`: this kernel is to be used when the data is linearly seperable. This kernel doesn't actually project onto higher demensional space. It is given by the inner product of two vectors. 
 
-* `Polynomial kernel`: This kernel can be used when the data is not linearly seperable and adds a polynmial term much like the polynomial term in regression. The trick here is still that the kernel allows for the inner product of vectors to be used as opposed to the actual individual data points. However it does add many added dimensions to the data which can result in very long run times. Additionally, the polynomial regression introduces two new hyperparameters: `Degree`, which indicates the degree of the kernel's polynomial term, (higher degree, more flexbility) and `Gamma` 
+* `Polynomial kernel`: This kernel can be used when the data is not linearly seperable and adds a polynmial term much like the polynomial term in regression. The trick here is still that the kernel allows for the inner product of vectors to be used as opposed to the actual individual data points. However it does add many added dimensions to the data which can result in very long run times. Additionally, the polynomial regression introduces two new hyperparameters: `Degree`, which indicates the degree of the kernel's polynomial term, (higher degree, more flexbility) and `Gamma`.
+
+* `Radial kernel`: Based on the radial basis function (`RBF`). This kernel can be effective when dealing with non-linearly seperable data. Interestingly, RBF has the property of infinitely expanding the dimensions of the data. This makes it especially useful for non-linear geometrical patterns once projected back down to the original dimensions. 
  
 SVM can also be extended to multi-class classification problems using `OvO` and `OvA`. This extention beyond the binary-class setting is methodologically identical to OvO and OvA with logistic regression. 
 
@@ -311,22 +319,47 @@ SVM can also be extended to multi-class classification problems using `OvO` and 
 
 ![image](/svm.png)
 
+Here we want to maximize the sum of the inner term because when a label is correctly classfied it results in 1. However, we want to minimize the penalty term. The lambda symbol is a tuning parameter to control the regularization of the coefficients. A small lambda value corresponds to a small C value, meaning the model will allow a lot of violation (soft margin). The equation can be expressed in many forms including the hinge-loss function, but for the purpose of this project, I will not go any further with its explanation. 
+
 ## Pros and Cons of the SVM:
 
 
 ### The Pros: 
-* Robust to variances in training data (avoids overfitting).
-* Just like the decision tree classifier, random forests allow you to see feature importances explicitly.
-* Very minimal data preprocessing required (depending on software libraries).
+* Kernilization makes SVM versatile and effective in high dimensional spaces.
+* Works efficiently and accurately on linearly seperated data.
+* Gives the user a lot of control over its functionality.
 
 
 ### The Cons: 
-* Very computationally intensive and can run very slow with many estimators.
-* Random forests lose a bit of the interpretability of simple decision trees in their large-scale complexity.
-* Lots of thought must be given to optimizing the hyperparameters. 
+* Very slow run time on large datasets, often making it unsuitable for a particular problem.
+* When data is not linearly seperable SVM requires a lot of careful tuning.
 
 ## Applying SVM in Python
 
+For the application of SVM in Python, I continue utilizing FSFS for selecting features. I keep the `k_features = 15` considering SVM is known for handling high-dimensionality. 
+
+```Python
+SVM_clf = SVC() #using linear kernel
+for_step_select_SVM = sfs(rf_clf, k_features=15, forward=True, verbose=2, scoring='accuracy')
+#fit the forward stepwise selection class to the data
+for_step_select_SVM = for_step_select_rf.fit(X, y)
+```
+I use `Sklearn`'s `SVC()` class. The `sfs` function outputs the following features: `['cust_id', 'LIMIT_BAL', 'SEX', 'EDUCATION', 'MARRIAGE', 'AGE', 'PAY_0', 'PAY_2', 'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6', 'BILL_AMT2', 'PAY_AMT5', 'PAY_AMT6']`. I then perform a train/test split like in all previous applications. Next, I initialize a grid search to tune SVM's many parameters. The parameter grid looks like this: 
+```Python
+# defining parameter range
+param_grid = { 'C':[0.1,1,100,1000],'kernel':['rbf','poly','sigmoid','linear'],'degree':[1,2,3,4,5,6],'gamma': [1, 0.1, 0.01, 0.001, 0.0001]}
+grid = GridSearchCV(SVC(),param_grid)
+grid.fit(X_train,y_train)
+```
+I'll once again map the parameters used in the grid search with their corresponding significance:
+
+* `C`: The regularization penalty term. It controls the budget for missclassifcations the SVC will use.
+
+* `kernel`: What kind of kernilization to use, default is `rbf`.
+
+* `degree`: Defines the degree of the polynomial kernel, ignored otherwise.
+
+* `gamma`: The value of gamma is used to control the flexibility of the effects created by the rbf, poly, and sigmoid kernels. 
 
 # Sources
 
