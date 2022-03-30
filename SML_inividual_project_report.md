@@ -24,7 +24,7 @@ In a nutshell, linear regression fits a line or hyperplane to the data. This reg
 
 The equation of multiple linear regression is certainly one most people have encountered in their grade school math curriculum, as it is simply the equation for slope, or change of a dependent variable as a ratio of change in an independent variables. The equation is as follows: 
 
-![image](linearregression.png)
+![image](Images/linearregression.png)
 
 *y* represents the response variable, *x* the independent variable, and beta zero through beta p indicate the intercept coefficient and the coefficients for the features.
 
@@ -32,7 +32,7 @@ The equation of multiple linear regression is certainly one most people have enc
 
 In order to fit a line that best matches the pattern of the data, linear regression, just as all other learning algorithms do, depends on an objective or cost function which acts as a feedback loop to the algorithm indicating how good of a job it is doing and by how much. By doing this, the algorithm can iteratively adjust its coefficients to minimize the output of the objective function and subsequently improve its fit. One common objective function used is `RSS` or residual sum of squares. Which penalizes predictions with large residuals by squaring their value. A residual is the difference between a prediction value outputted by the model and an actual value which we figuratively keep out of the model's site until it's time to evaluate its performance. The RSS is than just a sum of the residuals for all predictions. The equation looks as follows: 
 
-![image](RSS.png)
+![image](Images/RSS.png)
 
 Here *yi* represents an actual label value and *f(xi)* a predicted or estimated value. When we subtract predicted value from the actual value we get the residual. We then square the residual and perform summation across all predicted values to find the RSS. 
 
@@ -94,7 +94,7 @@ Then a voting process occurs where the majority classification is considered the
 
 To make predictions ranging from 0 and 1 to model probability of the event of interest occurring, we need a function which outputs such values. The aforementioned function is called the sigmoid function and is the heart of logistic regression. Its formula is as follows:
 
-![image](Sigmoid.png)
+![image](Images/Sigmoid.png)
 
 
 Using this function, we can plug in the linear combination of coefficients and corresponding feature vectors into *x*, hence the *regression* in logistic regression. 
@@ -103,7 +103,7 @@ Using this function, we can plug in the linear combination of coefficients and c
 
 The beta coefficients must be estimated so that logistic regression's output predicts probabilities of the likelihood of an observation to fall in the positive response class which are as close as possible to the observed labels (0 or 1). In the case of this data set, the event of interest is credit card default in the following month (`default.payment.next.month`). The mathematical function which can be maximized to determine these optimal coefficient values is called the `likelihood function` formulated as follows: 
 
-![image](loglikelihood.png)
+![image](Images/loglikelihood.png)
 
 We optimize the likelihood function above by finding the coefficients that minimize the function. These will be the estimated beta coefficients we plug into the *x* within the sigmoid function. Alternatively, we can use maximum likelihood and maximize it to find the optimal beta coefficients. 
 
@@ -308,7 +308,7 @@ SVM can also be extended to multi-class classification problems using `OvO` and 
 
 ## SVM's Objective Function:
 
-![image](/svm.png)
+![image](Images//svm.png)
 
 Here we want to maximize the sum of the inner term because when a label is correctly classified it results in one. However, we want to minimize the penalty term. The lambda symbol is a tuning parameter to control the regularization of the coefficients. A small lambda value corresponds to a small C value, meaning the model will allow a lot of violation (soft margin). The equation can be expressed in many forms including the hinge-loss function, but for the purpose of this project, I will not go any further with its explanation. 
 
@@ -386,7 +386,7 @@ def compare_models(models,preds,model_names):
 ```
 The dataframe returned by this function can be seen below: 
 
-![image](performance_df.png)
+![image](Images/performance_df.png)
 
 As can be seen above the random forest performed the best in this benchmarking application followed closely by the decision tree classifier, and finally logistic regression and SVM tie each other for the least performant AUC across these four classification algorithms. This comes as no surprise as tree-based methods are known for the consistently solid results. 
 
